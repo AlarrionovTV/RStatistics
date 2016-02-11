@@ -5,9 +5,9 @@
 #' @keywords cointegration
 #' @export
 #' @examples
-#' regr()
+#' Critcorr()
 
-regr = function(listInput){
+Critcorr = function(listInput){
   joinedInput = do.call(rbind,listInput)
   transposedInput = split(joinedInput,col(joinedInput))
   a = as.numeric(transposedInput[[1]])
@@ -28,6 +28,9 @@ regr = function(listInput){
   cff = c(summary(m)$coefficients[1,1],
           summary(m)$coefficients[2,1])
   
+  cr = c(cor(a,b),
+         cor.test(a,b)$p.value)
+  
   pvalpar = c(summary(m)$coefficients[1,4],
               summary(m)$coefficients[2,4])
   
@@ -35,9 +38,6 @@ regr = function(listInput){
   
   res = c(mean(m$residuals),
           var(m$residuals))
-  
-  cr = c(cor(a,b),
-         cor.test(a,b)$p.value)
   
   kpss1 = c(kpsst1$p.value,
             kpsst1$parameter)
